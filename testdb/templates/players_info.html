@@ -12,14 +12,6 @@
 
     <form method="get" class="mb3">
         <div class="mb3">
-            <label for="sort-order" class="b mb2">Sort by Name:</label>
-            <select name="sort_order" id="sort-order" class="ml0 w-100">
-                <option value="asc" {% if current_sort_order == 'asc' %}selected{% endif %}>Ascending</option>
-                <option value="desc" {% if current_sort_order == 'desc' %}selected{% endif %}>Descending</option>
-            </select>
-        </div>
-
-        <div class="mb3">
             <label for="position" class="b mb2">Filter by Position:</label>
             <select name="position" id="position" class="ml0 w-100">
                 <option value="" {% if not current_position %}selected{% endif %}>All Positions</option>
