@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<div class="mw6 center pa3 sans-serif">
+    <h1 class="mb4">Arizona Diamondbacks Hitters Stats</h1>
+    <header class="b mb2">2024-25 Season</header>
+    {% for h in hitters %}
+    <div class="pa2 mb3 striped--near-white">
+        <div class="pl2">
+            <p class="mb2">Name: {{ h.player_pid.player_name }}</p>
+            <p class="mb2">Games Played: {{ h.h_g }}</p>
+            <p class="mb2">At Bats: {{ h.h_ab }}</p>
+            <p class="mb2">Hits: {{ h.h_h }}</p>
+            <p class="mb2">Home Runs: {{ h.h_hr }}</p>
+            <p class="mb2">RBIs: {{ h.h_rbi }}</p>
+            <p class="mb2">AVG: {{ h.h_avg }}</p>
+            <p class="mb2">OPS: {{ h.h_ops }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

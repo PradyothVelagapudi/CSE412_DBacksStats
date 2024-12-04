@@ -3,10 +3,13 @@
 {% block page_content %}
 
         <div class="mw6 center pa3 sans-serif">
-
             <h1 class="mb4">Arizona Diamondbacks Players</h1>
-
             <header class="b mb2">2024-25 Season</header>
+
+            <div class="mb4">
+                <a href="{% url 'hitter-stats' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue">View Hitters Stats</a>
+                <a href="{% url 'pitcher-stats' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue ml3">View Pitchers Stats</a>
+            </div>
 
         {% for p in players %}
 
