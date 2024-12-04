@@ -1,24 +1,75 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-
-<div class="mw6 center pa3 sans-serif">
+<div class="pa3 sans-serif">
     <h1 class="mb4">Arizona Diamondbacks Hitters Stats</h1>
     <header class="b mb2">2024-25 Season</header>
-    {% for h in hitters %}
-    <div class="pa2 mb3 striped--near-white">
-        <div class="pl2">
-            <p class="mb2">Name: {{ h.player_pid.player_name }}</p>
-            <p class="mb2">Games Played: {{ h.h_g }}</p>
-            <p class="mb2">At Bats: {{ h.h_ab }}</p>
-            <p class="mb2">Hits: {{ h.h_h }}</p>
-            <p class="mb2">Home Runs: {{ h.h_hr }}</p>
-            <p class="mb2">RBIs: {{ h.h_rbi }}</p>
-            <p class="mb2">AVG: {{ h.h_avg }}</p>
-            <p class="mb2">OPS: {{ h.h_ops }}</p>
-        </div>
-    </div>
-    {% endfor %}
-</div>
 
+    <div class="mb4">
+        <a href="{% url 'player-info' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue">View Players</a>
+        <a href="{% url 'pitcher-stats' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue ml3">View Pitchers Stats</a>
+    </div>
+
+    <div class="mb3" style="text-align: right;">
+        <a href="?sort_stat=player_pid__player_number&sort_order=asc" class="f6 link dim ba bw1 ph3 pv2 mb2 dib bg-blue white">Default Sort</a>
+    </div>
+
+    <style>
+        .header-link {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        .header-link:hover {
+            color: gray;
+        }
+    </style>
+
+    <table class="collapse ba br2 b--black-10 pv2 ph3 mt3">
+        <thead>
+            <tr class="striped--near-white">
+                {% for field, label in fields.items %}
+                <th class="pv2 ph3 tl f6 fw6 ttu">
+                    <a href="?sort_stat={{ field }}&sort_order={% if current_sort_stat == field and current_sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="header-link">
+                        {{ label }}
+                        {% if current_sort_stat == field %}
+                            {% if current_sort_order == 'desc' %}
+                                ▲
+                            {% elif current_sort_order == 'asc' %}
+                                ▼
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for h in hitters %}
+            <tr class="striped--near-white">
+                <td class="pv2 ph3">{{ h.player_pid.player_number }}</td>
+                <td class="pv2 ph3">{{ h.player_pid.player_name }}</td>
+                <td class="pv2 ph3">{{ h.h_position }}</td>
+                <td class="pv2 ph3">{{ h.h_g }}</td>
+                <td class="pv2 ph3">{{ h.h_ab }}</td>
+                <td class="pv2 ph3">{{ h.h_r }}</td>
+                <td class="pv2 ph3">{{ h.h_2b }}</td>
+                <td class="pv2 ph3">{{ h.h_3b }}</td>
+                <td class="pv2 ph3">{{ h.h_hr }}</td>
+                <td class="pv2 ph3">{{ h.h_rbi }}</td>
+                <td class="pv2 ph3">{{ h.h_bb }}</td>
+                <td class="pv2 ph3">{{ h.h_so }}</td>
+                <td class="pv2 ph3">{{ h.h_sb }}</td>
+                <td class="pv2 ph3">{{ h.h_cs }}</td>
+                <td class="pv2 ph3">{{ h.h_avg }}</td>
+                <td class="pv2 ph3">{{ h.h_obp }}</td>
+                <td class="pv2 ph3">{{ h.h_slg }}</td>
+                <td class="pv2 ph3">{{ h.h_ops }}</td>
+                <td class="pv2 ph3">{{ h.h_h }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

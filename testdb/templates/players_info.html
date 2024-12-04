@@ -1,34 +1,85 @@
 {% extends "base.html" %}
 
 {% block page_content %}
+<div class="pa3 sans-serif">
+    <h1 class="mb4">Arizona Diamondbacks Players</h1>
+    <header class="b mb2">2024-25 Season</header>
 
-        <div class="mw6 center pa3 sans-serif">
-            <h1 class="mb4">Arizona Diamondbacks Players</h1>
-            <header class="b mb2">2024-25 Season</header>
+    <div class="mb4">
+        <a href="{% url 'hitter-stats' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue">View Hitters Stats</a>
+        <a href="{% url 'pitcher-stats' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue ml3">View Pitchers Stats</a>
+    </div>
 
-            <div class="mb4">
-                <a href="{% url 'hitter-stats' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue">View Hitters Stats</a>
-                <a href="{% url 'pitcher-stats' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue ml3">View Pitchers Stats</a>
-            </div>
-
-        {% for p in players %}
-
-            <div class="pa2 mb3 striped--near-white">
-
-                <div class="pl2">
-
-                    <p class="mb2">Name: {{ p.player_name }}</p>
-
-                    <p class="mb2">Number: {{ p.player_number }}</p>
-
-                    <p class="mb2">Position: {{ p.player_position }}</p>
-
-                </div>
-
-            </div>
-
-        {% endfor %}
-
+    <form method="get" class="mb3">
+        <div class="mb3">
+            <label for="sort-order" class="b mb2">Sort by Name:</label>
+            <select name="sort_order" id="sort-order" class="ml0 w-100">
+                <option value="asc" {% if current_sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+                <option value="desc" {% if current_sort_order == 'desc' %}selected{% endif %}>Descending</option>
+            </select>
         </div>
 
+        <div class="mb3">
+            <label for="position" class="b mb2">Filter by Position:</label>
+            <select name="position" id="position" class="ml0 w-100">
+                <option value="" {% if not current_position %}selected{% endif %}>All Positions</option>
+                {% for position in all_positions %}
+                <option value="{{ position }}" {% if current_position == position %}selected{% endif %}>{{ position }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <button type="submit" class="pa2 br2 bg-blue white">Apply</button>
+        </div>
+    </form>
+
+    <div class="mb3" style="text-align: right;">
+        <a href="?sort_stat=player_number&sort_order=asc" class="f6 link dim ba bw1 ph3 pv2 mb2 dib bg-blue white">Default Sort</a>
+    </div>
+
+    <style>
+        .header-link {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        .header-link:hover {
+            color: gray;
+        }
+    </style>
+
+    <table class="collapse ba br2 b--black-10 pv2 ph3 mt3">
+        <thead>
+            <tr class="striped--near-white">
+                {% for field, label in fields.items %}
+                <th class="pv2 ph3 tl f6 fw6 ttu">
+                    <a href="?sort_stat={{ field }}&sort_order={% if current_sort_stat == field and current_sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="header-link">
+                        {{ label }}
+                        {% if current_sort_stat == field %}
+                            {% if current_sort_order == 'desc' %}
+                                ▲
+                            {% else %}
+                                ▼
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in players %}
+            <tr class="striped--near-white">
+                <td class="pv2 ph3">{{ p.player_number }}</td>
+                <td class="pv2 ph3">{{ p.player_name }}</td>
+                <td class="pv2 ph3">{{ p.player_position }}</td>
+                <td class="pv2 ph3">{{ p.player_bat_thr }}</td>
+                <td class="pv2 ph3">{{ p.player_age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
