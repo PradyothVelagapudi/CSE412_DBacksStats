@@ -65,13 +65,18 @@
             {% for p in players %}
             <tr class="striped--near-white">
                 <td class="pv2 ph3">{{ p.player_number }}</td>
-                <td class="pv2 ph3">{{ p.player_name }}</td>
+                <td class="pv2 ph3">
+                    <a href="{% url 'player-detail' player_pid=p.player_pid %}" class="link dim dark-blue">
+                        {{ p.player_name }}
+                    </a>
+                </td>
                 <td class="pv2 ph3">{{ p.player_position }}</td>
                 <td class="pv2 ph3">{{ p.player_bat_thr }}</td>
                 <td class="pv2 ph3">{{ p.player_age }}</td>
             </tr>
             {% endfor %}
         </tbody>
+        
     </table>
 </div>
 {% endblock %}

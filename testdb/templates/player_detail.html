@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="pa3 sans-serif">
+    <h1 class="mb4">Player Details</h1>
+
+    <div class="mb3">
+        <p><strong>Name:</strong> {{ player.player_name }}</p>
+        <p><strong>Position:</strong> {{ player.player_position }}</p>
+        <p><strong>Number:</strong> {{ player.player_number }}</p>
+        <p><strong>Bat/Throw:</strong> {{ player.player_bat_thr }}</p>
+        <p><strong>Age:</strong> {{ player.player_age }}</p>
+    </div>
+
+    <a href="{% url 'player-info' %}" class="f6 link dim ba bw1 ph3 pv2 mb2 dib dark-blue">Back to Players</a>
+</div>
+{% endblock %}

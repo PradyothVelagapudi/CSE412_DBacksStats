@@ -116,3 +116,14 @@ def pitcher_stats(request):
         "fields": fields,
     }
     return render(request, "pitchers_stats.html", context)
+
+def player_detail(request, player_pid):
+    try:
+        player = Players.objects.get(player_pid=player_pid)
+    except Players.DoesNotExist:
+        return HttpResponse("Player not found.", status=404)
+
+    context = {
+        "player": player,
+    }
+    return render(request, "player_detail.html", context)
